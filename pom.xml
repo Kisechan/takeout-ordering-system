@@ -1,0 +1,37 @@
+<dependencies>
+    <!-- Swing -->
+    <dependency>
+        <groupId>org.swinglabs</groupId>
+        <artifactId>swingx</artifactId>
+        <version>1.6.1</version>
+    </dependency>
+
+    <!-- MySQL Connector -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.26</version>
+    </dependency>
+
+    <!-- Hibernate -->
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>5.5.7.Final</version>
+    </dependency>
+
+    <!-- Log4j -->
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.17</version>
+    </dependency>
+
+    <!-- JUnit -->
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.13.2</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
