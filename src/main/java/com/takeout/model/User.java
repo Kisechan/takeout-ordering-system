@@ -86,7 +86,3 @@ public class User {
                 '}';
     }
 }
-
-enum Role {
-    CUSTOMER, MERCHANT
-}
