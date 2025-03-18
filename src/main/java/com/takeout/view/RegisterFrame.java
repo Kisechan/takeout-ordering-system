@@ -19,8 +19,8 @@ public class RegisterFrame extends JFrame {
     private UserController userController = new UserController();
 
     public RegisterFrame() {
-        setTitle("Register");
-        setSize(300, 250);
+        setTitle("注册");
+        setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -32,17 +32,17 @@ public class RegisterFrame extends JFrame {
         phoneField = new JTextField(20);
         roleComboBox = new JComboBox<>(Role.values());
         addressField = new JTextField(20);
-        registerButton = new JButton("Register");
+        registerButton = new JButton("注册");
 
-        panel.add(new JLabel("Username:"));
+        panel.add(new JLabel("用户名:"));
         panel.add(usernameField);
-        panel.add(new JLabel("Password:"));
+        panel.add(new JLabel("密码:"));
         panel.add(passwordField);
-        panel.add(new JLabel("Phone:"));
+        panel.add(new JLabel("电话:"));
         panel.add(phoneField);
-        panel.add(new JLabel("Role:"));
+        panel.add(new JLabel("注册角色:"));
         panel.add(roleComboBox);
-        panel.add(new JLabel("Address:"));
+        panel.add(new JLabel("地址:"));
         panel.add(addressField);
         panel.add(registerButton);
 
@@ -63,7 +63,7 @@ public class RegisterFrame extends JFrame {
                 user.setRole(role);
 
                 userController.register(user);
-                JOptionPane.showMessageDialog(RegisterFrame.this, "Registration successful!");
+                JOptionPane.showMessageDialog(RegisterFrame.this, "注册成功！");
                 dispose(); // 关闭注册窗口
             }
         });

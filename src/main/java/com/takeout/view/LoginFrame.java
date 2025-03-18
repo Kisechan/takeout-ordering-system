@@ -16,8 +16,8 @@ public class LoginFrame extends JFrame {
     private UserController userController = new UserController();
 
     public LoginFrame() {
-        setTitle("Login");
-        setSize(300, 200);
+        setTitle("登录");
+        setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -26,12 +26,12 @@ public class LoginFrame extends JFrame {
 
         usernameField = new JTextField(20);
         passwordField = new JPasswordField(20);
-        loginButton = new JButton("Login");
-        registerButton = new JButton("Register");
+        loginButton = new JButton("登录");
+        registerButton = new JButton("注册");
 
-        panel.add(new JLabel("Username:"));
+        panel.add(new JLabel("用户名:"));
         panel.add(usernameField);
-        panel.add(new JLabel("Password:"));
+        panel.add(new JLabel("密码:"));
         panel.add(passwordField);
         panel.add(loginButton);
         panel.add(registerButton);
@@ -46,12 +46,12 @@ public class LoginFrame extends JFrame {
 
                 User user = userController.login(username, password);
                 if (user != null) {
-                    JOptionPane.showMessageDialog(LoginFrame.this, "Login successful!");
+                    JOptionPane.showMessageDialog(LoginFrame.this, "成功登录！");
                     // 打开主界面
                     new MainFrame(user).setVisible(true);
                     dispose(); // 关闭登录窗口
                 } else {
-                    JOptionPane.showMessageDialog(LoginFrame.this, "Invalid username or password.");
+                    JOptionPane.showMessageDialog(LoginFrame.this, "用户名或密码错误！");
                 }
             }
         });

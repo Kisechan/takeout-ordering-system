@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class MainFrame extends JFrame {
     public MainFrame(User user) {
-        setTitle("Main Menu");
+        setTitle("Takeout 订单管理系统");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JLabel welcomeLabel = new JLabel("Welcome, " + user.getUsername() + "!");
+        JLabel welcomeLabel = new JLabel("欢迎 " + user.getUsername() + "！");
         panel.add(welcomeLabel);
 
         JButton viewOrdersButton = new JButton("View Orders");
