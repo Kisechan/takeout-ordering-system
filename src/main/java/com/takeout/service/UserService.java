@@ -9,7 +9,9 @@ public class UserService {
     private final UserDAO userDAO = new UserDAO();
 
     public User login(String username, String password) {
+        System.out.println(username);
         User user = userDAO.getUserByUsername(username);
+        System.out.println(user);
         if (user != null && user.getPassword().equals(password)) {
             return user;
         }

@@ -13,6 +13,7 @@ public class RegisterFrame extends JFrame {
     private JPasswordField passwordField;
     private JTextField phoneField;
     private JComboBox<Role> roleComboBox;
+    private JTextField addressField;
     private JButton registerButton;
 
     private UserController userController = new UserController();
@@ -30,6 +31,7 @@ public class RegisterFrame extends JFrame {
         passwordField = new JPasswordField(20);
         phoneField = new JTextField(20);
         roleComboBox = new JComboBox<>(Role.values());
+        addressField = new JTextField(20);
         registerButton = new JButton("Register");
 
         panel.add(new JLabel("Username:"));
@@ -40,6 +42,8 @@ public class RegisterFrame extends JFrame {
         panel.add(phoneField);
         panel.add(new JLabel("Role:"));
         panel.add(roleComboBox);
+        panel.add(new JLabel("Address:"));
+        panel.add(addressField);
         panel.add(registerButton);
 
         add(panel);

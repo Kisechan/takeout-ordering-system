@@ -23,6 +23,9 @@ public class User {
     @Column(name = "phone", nullable = false)
     private String phone;
 
+    @Column(name = "address", nullable = false)
+    private String address;
+
     // Getters and Setters
     public int getId() {
         return id;
@@ -64,6 +67,14 @@ public class User {
         this.phone = phone;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,6 +94,8 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", role=" + role +
+                ", phone=" + phone +
+                ", address=" + address +
                 '}';
     }
 }
