@@ -1,5 +1,5 @@
 package com.takeout.model;
 
-enum Role {
+public enum Role {
     CUSTOMER, MERCHANT
 }

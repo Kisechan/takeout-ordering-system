@@ -6,7 +6,7 @@ import java.util.List;
 
 public class OrderService {
 
-    private OrderDAO orderDAO = new OrderDAO();
+    private final OrderDAO orderDAO = new OrderDAO();
 
     public Order getOrderById(int id) {
         return orderDAO.getOrderById(id);

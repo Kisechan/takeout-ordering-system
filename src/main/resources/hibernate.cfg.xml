@@ -16,8 +16,9 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Names the annotated entity class -->
-        <mapping class="com.restaurant.model.User"/>
-        <mapping class="com.restaurant.model.Dish"/>
-        <mapping class="com.restaurant.model.Order"/>
+        <mapping class="com.takeout.model.Cart"/>
+        <mapping class="com.takeout.model.Dish"/>
+        <mapping class="com.takeout.model.Order"/>
+        <mapping class="com.takeout.model.User"/>
     </session-factory>
 </hibernate-configuration>
