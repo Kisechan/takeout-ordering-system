@@ -14,6 +14,7 @@ public class RegisterFrame extends JFrame {
     private JPasswordField passwordField;
     private JTextField phoneField;
     private JComboBox<Role> roleComboBox;
+    private JTextField addressField;
     private JButton registerButton;
 
     private UserController userController = new UserController();
@@ -64,21 +65,33 @@ public class RegisterFrame extends JFrame {
         phoneField = new JTextField(20);
         panel.add(phoneField, gbc);
 
-        // 角色标签和下拉框
+        // 地址标签和输入框
         gbc.gridx = 0;
         gbc.gridy = 3;
+        gbc.anchor = GridBagConstraints.EAST;
+        panel.add(new JLabel("地址:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        addressField = new JTextField(20);
+        panel.add(addressField, gbc);
+
+        // 角色标签和下拉框
+        gbc.gridx = 0;
+        gbc.gridy = 4;
         gbc.anchor = GridBagConstraints.EAST;
         panel.add(new JLabel("角色:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         roleComboBox = new JComboBox<>(Role.values());
         panel.add(roleComboBox, gbc);
 
         // 注册按钮
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         registerButton = new JButton("注册");
@@ -94,12 +107,14 @@ public class RegisterFrame extends JFrame {
                 String password = new String(passwordField.getPassword());
                 String phone = phoneField.getText();
                 Role role = (Role) roleComboBox.getSelectedItem();
+                String address = addressField.getText();
 
                 User user = new User();
                 user.setUsername(username);
                 user.setPassword(password);
                 user.setPhone(phone);
                 user.setRole(role);
+                user.setAddress(address);
 
                 userController.register(user);
                 JOptionPane.showMessageDialog(RegisterFrame.this, "注册成功！");
