@@ -2,6 +2,7 @@ package com.takeout.view;
 
 import com.takeout.controller.UserController;
 import com.takeout.model.User;
+import com.takeout.model.Role;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,26 +27,24 @@ public class LoginFrame extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5); // 设置组件之间的间距
 
-        // 用户名标签
+        // 用户名标签和输入框
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.EAST;
         panel.add(new JLabel("用户名:"), gbc);
 
-        // 用户名输入框
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         usernameField = new JTextField(20);
         panel.add(usernameField, gbc);
 
-        // 密码标签
+        // 密码标签和输入框
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.EAST;
         panel.add(new JLabel("密码:"), gbc);
 
-        // 密码输入框
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -58,8 +57,6 @@ public class LoginFrame extends JFrame {
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         loginButton = new JButton("登录");
-        loginButton.setBackground(new Color(0, 153, 204)); // 设置按钮背景色
-        loginButton.setForeground(Color.WHITE); // 设置按钮文字颜色
         panel.add(loginButton, gbc);
 
         // 注册按钮
@@ -68,12 +65,11 @@ public class LoginFrame extends JFrame {
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         registerButton = new JButton("注册");
-        registerButton.setBackground(new Color(102, 204, 0)); // 设置按钮背景色
-        registerButton.setForeground(Color.WHITE); // 设置按钮文字颜色
         panel.add(registerButton, gbc);
 
         add(panel);
 
+        // 登录按钮事件
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,8 +79,12 @@ public class LoginFrame extends JFrame {
                 User user = userController.login(username, password);
                 if (user != null) {
                     JOptionPane.showMessageDialog(LoginFrame.this, "成功登录！");
-                    // 打开主界面
-                    new MainFrame(user).setVisible(true);
+                    // 根据用户角色打开不同界面
+                    if (user.getRole() == Role.customer) {
+                        new CustomerMainFrame(user).setVisible(true);
+                    } else if (user.getRole() == Role.merchant) {
+                        new MerchantMainFrame(user).setVisible(true);
+                    }
                     dispose(); // 关闭登录窗口
                 } else {
                     JOptionPane.showMessageDialog(LoginFrame.this, "用户名或密码错误！");
@@ -92,10 +92,10 @@ public class LoginFrame extends JFrame {
             }
         });
 
+        // 注册按钮事件
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 打开注册窗口
                 new RegisterFrame().setVisible(true);
             }
         });
