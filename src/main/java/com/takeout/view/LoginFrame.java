@@ -19,41 +19,52 @@ public class LoginFrame extends JFrame {
 
     public LoginFrame() {
         setTitle("登录");
-        setSize(400, 300);
+        setSize(400, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // 设置组件之间的间距
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.EAST;
+
+        // 标题
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        JLabel titleLabel = new JLabel("Takeout - 外卖订餐系统");
+        titleLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
+        panel.add(titleLabel, gbc);
 
         // 用户名标签和输入框
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.EAST;
         panel.add(new JLabel("用户名:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         usernameField = new JTextField(20);
         panel.add(usernameField, gbc);
 
         // 密码标签和输入框
         gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.NONE;
         panel.add(new JLabel("密码:"), gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         passwordField = new JPasswordField(20);
         panel.add(passwordField, gbc);
 
         // 登录按钮
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         loginButton = new JButton("登录");
@@ -61,7 +72,7 @@ public class LoginFrame extends JFrame {
 
         // 注册按钮
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         registerButton = new JButton("注册");
@@ -76,9 +87,14 @@ public class LoginFrame extends JFrame {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
 
+                if (username.isEmpty() || password.isEmpty()) {
+                    JOptionPane.showMessageDialog(LoginFrame.this, "请输入用户名和密码！");
+                    return;
+                }
+
                 User user = userController.login(username, password);
                 if (user != null) {
-                    JOptionPane.showMessageDialog(LoginFrame.this, "成功登录！");
+                    JOptionPane.showMessageDialog(LoginFrame.this, "登录成功！");
                     // 根据用户角色打开不同界面
                     if (user.getRole() == Role.customer) {
                         new CustomerMainFrame(user).setVisible(true);

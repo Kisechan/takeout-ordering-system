@@ -21,18 +21,18 @@ public class RegisterFrame extends JFrame {
 
     public RegisterFrame() {
         setTitle("注册");
-        setSize(400, 300);
+        setSize(400, 350);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // 设置组件之间的间距
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.EAST;
 
         // 用户名标签和输入框
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.EAST;
         panel.add(new JLabel("用户名:"), gbc);
 
         gbc.gridx = 1;
@@ -44,7 +44,7 @@ public class RegisterFrame extends JFrame {
         // 密码标签和输入框
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
         panel.add(new JLabel("密码:"), gbc);
 
         gbc.gridx = 1;
@@ -56,7 +56,7 @@ public class RegisterFrame extends JFrame {
         // 电话标签和输入框
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
         panel.add(new JLabel("电话:"), gbc);
 
         gbc.gridx = 1;
@@ -68,7 +68,7 @@ public class RegisterFrame extends JFrame {
         // 地址标签和输入框
         gbc.gridx = 0;
         gbc.gridy = 3;
-        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
         panel.add(new JLabel("地址:"), gbc);
 
         gbc.gridx = 1;
@@ -80,7 +80,7 @@ public class RegisterFrame extends JFrame {
         // 角色标签和下拉框
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
         panel.add(new JLabel("角色:"), gbc);
 
         gbc.gridx = 1;
@@ -106,15 +106,20 @@ public class RegisterFrame extends JFrame {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
                 String phone = phoneField.getText();
-                Role role = (Role) roleComboBox.getSelectedItem();
                 String address = addressField.getText();
+                Role role = (Role) roleComboBox.getSelectedItem();
+
+                if (username.isEmpty() || password.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+                    JOptionPane.showMessageDialog(RegisterFrame.this, "请填写完整信息！");
+                    return;
+                }
 
                 User user = new User();
                 user.setUsername(username);
                 user.setPassword(password);
                 user.setPhone(phone);
-                user.setRole(role);
                 user.setAddress(address);
+                user.setRole(role);
 
                 userController.register(user);
                 JOptionPane.showMessageDialog(RegisterFrame.this, "注册成功！");
