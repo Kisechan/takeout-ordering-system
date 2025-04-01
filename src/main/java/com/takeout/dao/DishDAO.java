@@ -13,6 +13,7 @@ public class DishDAO {
             return session.get(Dish.class, id);
         }
     }
+
     public List<Dish> getDishesByMerchant(int merchantId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Dish> query = session.createQuery("FROM Dish WHERE merchant.id = :merchantId", Dish.class);
@@ -20,6 +21,16 @@ public class DishDAO {
             return query.list();
         }
     }
+
+    public List<Dish> getAvailableDishesByMerchant(int merchantId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Dish> query = session.createQuery(
+                    "FROM Dish WHERE merchant.id = :merchantId AND isAvailable = true", Dish.class);
+            query.setParameter("merchantId", merchantId);
+            return query.list();
+        }
+    }
+
     public void addDish(Dish dish) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -27,6 +38,7 @@ public class DishDAO {
             transaction.commit();
         }
     }
+
     public void updateDish(Dish dish) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -34,6 +46,7 @@ public class DishDAO {
             transaction.commit();
         }
     }
+
     public void deleteDish(int id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -44,9 +57,22 @@ public class DishDAO {
             transaction.commit();
         }
     }
+
     public List<Dish> getAllDishes() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM Dish", Dish.class).list();
+        }
+    }
+
+    public void toggleDishAvailability(int dishId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Dish dish = session.get(Dish.class, dishId);
+            if (dish != null) {
+                dish.setAvailable(!dish.isAvailable());
+                session.update(dish);
+            }
+            transaction.commit();
         }
     }
 }

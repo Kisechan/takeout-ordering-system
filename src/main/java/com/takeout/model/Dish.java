@@ -18,6 +18,9 @@ public class Dish {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "is_available", nullable = false)
+    private boolean isAvailable = true;
+
     @ManyToOne
     @JoinColumn(name = "merchant_id", nullable = false)
     private User merchant;
@@ -55,6 +58,14 @@ public class Dish {
         this.description = description;
     }
 
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
     public User getMerchant() {
         return merchant;
     }
@@ -69,6 +80,7 @@ public class Dish {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
+                ", isAvailable=" + isAvailable +
                 '}';
     }
 }

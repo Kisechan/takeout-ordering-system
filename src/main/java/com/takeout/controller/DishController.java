@@ -2,11 +2,9 @@ package com.takeout.controller;
 
 import com.takeout.model.Dish;
 import com.takeout.service.DishService;
-
 import java.util.List;
 
 public class DishController {
-
     private final DishService dishService = new DishService();
 
     public Dish getDishById(int id) {
@@ -15,6 +13,10 @@ public class DishController {
 
     public List<Dish> getDishesByMerchant(int merchantId) {
         return dishService.getDishesByMerchant(merchantId);
+    }
+
+    public List<Dish> getAvailableDishesByMerchant(int merchantId) {
+        return dishService.getAvailableDishesByMerchant(merchantId);
     }
 
     public void addDish(Dish dish) {
@@ -31,5 +33,9 @@ public class DishController {
 
     public List<Dish> getAllDishes() {
         return dishService.getAllDishes();
+    }
+
+    public void toggleDishAvailability(int dishId) {
+        dishService.toggleDishAvailability(dishId);
     }
 }
