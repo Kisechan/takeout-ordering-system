@@ -33,7 +33,7 @@ public class RegisterFrame extends JFrame {
         // 用户名标签和输入框
         gbc.gridx = 0;
         gbc.gridy = 0;
-        panel.add(new JLabel("用户名:"), gbc);
+        panel.add(new JLabel("用户名*:"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -45,7 +45,7 @@ public class RegisterFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.NONE;
-        panel.add(new JLabel("密码:"), gbc);
+        panel.add(new JLabel("密码*:"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -57,7 +57,7 @@ public class RegisterFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.NONE;
-        panel.add(new JLabel("电话:"), gbc);
+        panel.add(new JLabel("电话*:"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -69,7 +69,7 @@ public class RegisterFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.NONE;
-        panel.add(new JLabel("地址:"), gbc);
+        panel.add(new JLabel("地址*:"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -81,7 +81,7 @@ public class RegisterFrame extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.NONE;
-        panel.add(new JLabel("角色:"), gbc);
+        panel.add(new JLabel("角色*:"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 4;
@@ -103,17 +103,34 @@ public class RegisterFrame extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-                String phone = phoneField.getText();
-                String address = addressField.getText();
+                String username = usernameField.getText().trim();
+                String password = new String(passwordField.getPassword()).trim();
+                String phone = phoneField.getText().trim();
+                String address = addressField.getText().trim();
                 Role role = (Role) roleComboBox.getSelectedItem();
 
-                if (username.isEmpty() || password.isEmpty() || phone.isEmpty() || address.isEmpty()) {
-                    JOptionPane.showMessageDialog(RegisterFrame.this, "请填写完整信息！");
+                // 合法性校验
+                if (username.length() < 2) {
+                    JOptionPane.showMessageDialog(RegisterFrame.this, "用户名不能为空，且至少2个字符！");
                     return;
                 }
 
+                if (password.length() < 6) {
+                    JOptionPane.showMessageDialog(RegisterFrame.this, "密码不能为空，且至少6位！");
+                    return;
+                }
+
+                if (!phone.matches("^\\d{11}$")) {
+                    JOptionPane.showMessageDialog(RegisterFrame.this, "电话必须是11位数字！");
+                    return;
+                }
+
+                if (address.isEmpty()) {
+                    JOptionPane.showMessageDialog(RegisterFrame.this, "地址不能为空！");
+                    return;
+                }
+
+                // 如果通过校验，则构造用户对象并提交
                 User user = new User();
                 user.setUsername(username);
                 user.setPassword(password);
@@ -123,8 +140,9 @@ public class RegisterFrame extends JFrame {
 
                 userController.register(user);
                 JOptionPane.showMessageDialog(RegisterFrame.this, "注册成功！");
-                dispose(); // 关闭注册窗口
+                dispose();
             }
         });
+
     }
 }
