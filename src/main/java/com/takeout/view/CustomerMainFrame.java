@@ -243,18 +243,59 @@ public class CustomerMainFrame extends JFrame {
                 itemPanel.setBorder(BorderFactory.createEtchedBorder());
 
                 Dish dish = cart.getDish();
-                JLabel nameLabel = new JLabel(dish.getName() + " × " + cart.getQuantity() + " - ¥" + (dish.getPrice() * cart.getQuantity()));
-                total += dish.getPrice() * cart.getQuantity();
 
+                // 左侧按钮区域
+                JPanel leftButtonPanel = new JPanel(new GridLayout(2, 1, 5, 5));
+
+                // 数量调整
+                JPanel quantityPanel = new JPanel();
+                JButton decreaseButton = new JButton("-");
+                JLabel quantityLabel = new JLabel(String.valueOf(cart.getQuantity()));
+                JButton increaseButton = new JButton("+");
+
+                decreaseButton.addActionListener(e -> {
+                    int newQuantity = cart.getQuantity() - 1;
+                    if (newQuantity > 0) {
+                        cart.setQuantity(newQuantity);
+                        cartController.updateCart(cart);
+                        showCartPanel(); // 刷新
+                    } else {
+                        cartController.deleteCart(cart.getId());
+                        showCartPanel(); // 刷新
+                    }
+                });
+
+                increaseButton.addActionListener(e -> {
+                    cart.setQuantity(cart.getQuantity() + 1);
+                    cartController.updateCart(cart);
+                    showCartPanel(); // 刷新
+                });
+
+                quantityPanel.add(decreaseButton);
+                quantityPanel.add(quantityLabel);
+                quantityPanel.add(increaseButton);
+                leftButtonPanel.add(quantityPanel);
+
+                // 删除按钮
                 JButton removeButton = new JButton("删除");
                 removeButton.addActionListener(e -> {
                     cartController.deleteCart(cart.getId());
-                    showCartPanel(); // 刷新购物车
+                    showCartPanel(); // 刷新
                 });
+                leftButtonPanel.add(removeButton);
 
+                // 中间信息区域
+                JPanel infoPanel = new JPanel(new BorderLayout());
+                JLabel nameLabel = new JLabel(dish.getName());
+                JLabel priceLabel = new JLabel("¥" + (dish.getPrice() * cart.getQuantity()));
+                total += dish.getPrice() * cart.getQuantity();
+
+                infoPanel.add(nameLabel, BorderLayout.NORTH);
+                infoPanel.add(priceLabel, BorderLayout.CENTER);
+
+                // 右侧结算按钮
                 JButton checkoutButton = new JButton("结算");
                 checkoutButton.addActionListener(e -> {
-                    // 创建订单
                     Order order = new Order();
                     order.setCustomer(user);
                     order.setMerchant(dish.getMerchant());
@@ -263,21 +304,17 @@ public class CustomerMainFrame extends JFrame {
                     order.setPrice(dish.getPrice());
                     order.setTotalPrice(dish.getPrice() * cart.getQuantity());
                     order.setStatus(OrderStatus.pending);
+                    order.setAddTime(LocalDateTime.now());
                     orderController.addOrder(order);
 
-                    // 从购物车移除
                     cartController.deleteCart(cart.getId());
-
                     JOptionPane.showMessageDialog(this, "下单成功！");
-                    showCartPanel(); // 刷新购物车
+                    showCartPanel();
                 });
 
-                JPanel buttonPanel = new JPanel();
-                buttonPanel.add(removeButton);
-                buttonPanel.add(checkoutButton);
-
-                itemPanel.add(nameLabel, BorderLayout.CENTER);
-                itemPanel.add(buttonPanel, BorderLayout.EAST);
+                itemPanel.add(leftButtonPanel, BorderLayout.WEST);
+                itemPanel.add(infoPanel, BorderLayout.CENTER);
+                itemPanel.add(checkoutButton, BorderLayout.EAST);
 
                 cartPanel.add(itemPanel);
             }
