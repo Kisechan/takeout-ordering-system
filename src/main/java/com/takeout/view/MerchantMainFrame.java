@@ -2,6 +2,7 @@ package com.takeout.view;
 
 import com.takeout.controller.*;
 import com.takeout.model.*;
+import com.takeout.util.IconUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,7 @@ public class MerchantMainFrame extends JFrame {
     private UserController userController = new UserController();
 
     public MerchantMainFrame(User user) {
+        IconUtil.setWindowIcon(this);
         this.user = user;
         setTitle("商家主页 - " + user.getUsername());
         setSize(900, 700);

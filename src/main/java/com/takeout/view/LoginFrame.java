@@ -3,6 +3,7 @@ package com.takeout.view;
 import com.takeout.controller.UserController;
 import com.takeout.model.User;
 import com.takeout.model.Role;
+import com.takeout.util.IconUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,7 @@ public class LoginFrame extends JFrame {
     private UserController userController = new UserController();
 
     public LoginFrame() {
+        IconUtil.setWindowIcon(this);
         setTitle("登录");
         setSize(400, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -2,6 +2,7 @@ package com.takeout.view;
 
 import com.takeout.controller.*;
 import com.takeout.model.*;
+import com.takeout.util.IconUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,6 +29,7 @@ public class CustomerMainFrame extends JFrame {
 
     // 修改构造函数，设置全局样式
     public CustomerMainFrame(User user) {
+        IconUtil.setWindowIcon(this);
         this.user = user;
         setTitle("顾客主页 - " + user.getUsername());
         setSize(900, 700);  // 稍微增大窗口尺寸
